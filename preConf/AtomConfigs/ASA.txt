@@ -1,0 +1,32 @@
+
+enable
+
+conf t
+
+hostname ASA
+enable password wsr
+passwd wsr
+names
+!
+interface Ethernet0/0
+ shutdown
+!
+interface Ethernet0/1
+ no shutdown
+!
+interface Vlan1
+ nameif inside
+ security-level 100
+ ip address 192.168.0.2 255.255.255.0
+!
+telnet 192.168.0.0 255.255.255.0 inside
+telnet timeout 5
+ssh key-exchange group dh-group14-sha1
+console timeout 0
+end
+
+wr
+
+sh ver | i Version|ASA 5505
+dir flash:
+

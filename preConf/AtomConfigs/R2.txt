@@ -1,0 +1,52 @@
+enable
+
+dir flash:
+sh ver | i license|License|Version|register is
+!
+conf t
+!
+license boot module c2900 technology-package securityk9
+yes
+license boot module c2900 technology-package uck9
+yes
+license boot module c2900 technology-package datak9
+yes
+end
+
+
+
+
+enable
+conf t
+!
+hostname R2
+!
+enable password wsr
+!
+no aaa new-model
+!
+license boot module c2900 technology-package securityk9
+license boot module c2900 technology-package uck9
+license boot module c2900 technology-package datak9
+!
+username wsr password 0 wsr
+!
+interface GigabitEthernet0/1
+ ip address 192.168.0.1 255.255.255.0
+ no shutdown
+!
+int g0/0
+ no sh
+!
+line vty 0 4
+ password wsr
+ login
+ transport input telnet
+!
+end
+wr
+
+dir flash:
+sh ver | i license|License|Version|register is
+
+!Version 15.7(3)M2

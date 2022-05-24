@@ -1,0 +1,38 @@
+
+!15.0(2) SE 8-9
+enable
+dir flash:
+sh ver | i Version
+
+conf ter
+hostname S2
+!
+enable password wsr
+!
+username wsr password 0 wsr
+no aaa new-model
+!
+interface FastEthernet0/1
+ description To ASA
+ switchport access vlan 13
+ switchport mode access
+!
+interface FastEthernet0/2
+ description to Server
+ switchport mode trunk
+!
+interface FastEthernet0/3
+ switchport access vlan 13
+ switchport mode access
+!
+interface Vlan13
+ ip address 192.168.0.4 255.255.255.0
+ no shutdown
+!
+
+line vty 0 4
+ password wsr
+ login
+end
+wr
+
